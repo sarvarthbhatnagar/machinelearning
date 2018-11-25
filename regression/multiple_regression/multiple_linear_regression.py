@@ -1,12 +1,12 @@
 # Multiple Linear Regression
 
 # Importing the libraries
-import numpy as np
+import numpy as nnp
 import matplotlib.pyplot as plt
 import pandas as pd
 
 # Importing the dataset
-dataset = pd.read_csv('50_Startups.csv')
+dataset = pd.read_csv('startups.csv')
 X = dataset.iloc[:, :-1].values
 y = dataset.iloc[:, 4].values
 
@@ -39,3 +39,11 @@ regressor.fit(X_train, y_train)
 
 # Predicting the Test set results
 y_pred = regressor.predict(X_test)
+
+# OLS would give the ordinary least square result and we need the summary to analyze which variable has greatest pvalue
+# The one with the greatest pvalue is eliminated.
+import statsmodels.formula.api as sm
+X = nnp.append(nnp.ones((len(X), 1)).astype(int), X, 1)
+X_opt = X[:, [0, 1, 3, 4,5]]
+regressor_OLS = sm.OLS(endog=y, exog=X_opt).fit()
+abc = regressor_OLS.summary()
